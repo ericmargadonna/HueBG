@@ -5,11 +5,15 @@
 SUGARMATE_API_CODE = 'zuv49t'
 HUE_BRIDGE_IP = '192.168.0.100'
 
-#Hue Values for red, green, and blue
-hues = {'red':0, 'green':25500, 'blue':43690}
+class Hues:
+    red = 0
+    green = 25500
+    blue = 43690
+    magenta = 54615
+
 #Hues to be used by the application for mapping
-HIGH_HUE = hues.get('red')
-LOW_HUE = hues.get('green')
+OUT_HUE = Hues.blue
+TARGET_HUE = Hues.magenta
 
 #Refresh rate in seconds for the application
 REFRESH_RATE = 20
@@ -18,9 +22,9 @@ REFRESH_RATE = 20
 MAX_BG = 250
 MIN_BG = 70
 
-#Target BG for rainbow mode, 
-#setting this to null will disable the effect
+#Target BG
 TARGET_BG = 130
+RNBW_ON_TARGET = True
 
 
 

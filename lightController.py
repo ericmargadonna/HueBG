@@ -15,15 +15,14 @@ lights = b.lights
 
 #This is the difference between the hues for high and low sugars
 #25500 is the default for a green to red hue shift
-HUE_DIFF = abs(HIGH_HUE-LOW_HUE)
+HUE_DIFF = abs(TARGET_HUE-OUT_HUE)
 
-#Calculating the size of the range of values to be used
-BG_RANGE = MAX_BG-MIN_BG
 
-#Calculating the factor at which we scale the hue to the BG reading
-scaleFactor = HUE_DIFF/BG_RANGE
+LOW_RANGE = TARGET_BG-MIN_BG
+HIGH_RANGE = MAX_BG-TARGET_BG
 
-QUIT = False
+LOW_SCALE = HUE_DIFF/LOW_RANGE
+HIGH_SCALE = HUE_DIFF/HIGH_RANGE
 
 def refreshBG():
         #Using the sugarmate API to fetch the most recent BG reading
@@ -31,7 +30,6 @@ def refreshBG():
         return r.get(url).json().get('value')
 
 def setup():
-    QUIT=False
     for l in lights:
         l.on = True
         l.effect = 'none'
@@ -40,17 +38,18 @@ def setup():
 
 def mainLoop():
         while True:
-            if QUIT:
-                return
             #Grabbing the most recent sugar
             currentBG = refreshBG()
 
+            #Debug
+            #CurrentBG =
+
             #Sets the lights to rainbow mode if you hit your target BG
-            if currentBG == TARGET_BG:
+            if currentBG == TARGET_BG and RNBW_ON_TARGET == True:
                 for l in lights:
                     l.effect = 'colorloop'
         
-            if currentBG < MAX_BG and currentBG > MIN_BG and currentBG != TARGET_BG:
+            #if currentBG < MAX_BG and currentBG > MIN_BG and currentBG != TARGET_BG:
                 # Okay, so becuase the hue is a wrapping uint16 value, 
                 # the starting or ending hue could have a larger value.
                 # Therefore we check to see which one is higher 
@@ -62,25 +61,40 @@ def mainLoop():
                 # multiplied by the scale factor (*scaleFactor). 
                 # This product is the final hue value (calc_hue).
 
-                if HIGH_HUE > LOW_HUE:
-                    calc_hue = HIGH_HUE - ((currentBG - MIN_BG)*scaleFactor)
-                if HIGH_HUE < LOW_HUE:
-                    calc_hue = LOW_HUE - ((currentBG - MIN_BG)*scaleFactor)
+                #if HIGH_HUE > LOW_HUE:
+                #    calc_hue = HIGH_HUE - ((currentBG - MIN_BG)*scaleFactor)
+                #if HIGH_HUE < LOW_HUE:
+                #    calc_hue = LOW_HUE - ((currentBG - MIN_BG)*scaleFactor)
                 
+                #for l in lights:
+                #    l.effect = 'none'
+                #    l.hue = calc_hue
+
+            if currentBG > TARGET_BG and currentBG < MAX_BG:  
+                if TARGET_HUE > OUT_HUE:
+                    calc_hue = TARGET_HUE - ((currentBG-TARGET_BG)*HIGH_SCALE)
+                if OUT_HUE > TARGET_HUE:
+                    calc_hue = OUT_HUE + ((currentBG-TARGET_BG)*HIGH_SCALE)
                 for l in lights:
                     l.effect = 'none'
                     l.hue = calc_hue
+                
+            if currentBG < TARGET_BG and currentBG > MIN_BG:
+                if TARGET_HUE > OUT_HUE:
+                    calc_hue = TARGET_HUE - ((TARGET_BG-currentBG)*LOW_SCALE)
+                if OUT_HUE > TARGET_HUE:
+                    calc_hue = OUT_HUE + ((TARGET_BG-currentBG)*LOW_SCALE)
 
-            if currentBG >= MAX_BG:
                 for l in lights:
                     l.effect = 'none'
-                    l.hue = HIGH_HUE
+                    l.hue = calc_hue
             
-            if currentBG <= MIN_BG:
+
+            if currentBG >= MAX_BG or currentBG <= MIN_BG:
                 for l in lights:
                     l.effect = 'none'
-                    l.hue = LOW_HUE
-
+                    l.hue = OUT_HUE
+            
             t.sleep(REFRESH_RATE)
 
 def run():
