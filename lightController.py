@@ -25,8 +25,14 @@ HIGH_SCALE = HUE_DIFF/HIGH_RANGE
 
 def refreshBG():
         #Using the sugarmate API to fetch the most recent BG reading
-        url = 'https://sugarmate.io/api/v1/{0}/latest.json'.format(SUGARMATE_API_CODE)
-        return r.get(url).json().get('value')
+        try:
+            url = 'https://sugarmate.io/api/v1/{0}/latest.json'.format(SUGARMATE_API_CODE)
+            return r.get(url).json().get('value')
+        #If for some reason the 
+        except Exception:
+            print(Exception)
+            print('Retrying')
+            return refreshBG()
 
 def setup():
     #Ensures that lights are on, and clears any effects
