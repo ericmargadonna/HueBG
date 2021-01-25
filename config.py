@@ -2,6 +2,9 @@
 #Written by Eric Margadonna
 #January 22, 2021
 
+#-----------------------------------------------------
+#BE SURE TO SET THESE VARIABLES
+#-----------------------------------------------------
 SUGARMATE_API_CODE = 'zuv49t'
 HUE_BRIDGE_IP = '192.168.0.100'
 
@@ -14,6 +17,9 @@ class Hues:
 #Hues to be used by the application for mapping
 OUT_HUE = Hues.blue
 TARGET_HUE = Hues.magenta
+
+BRIGHTNESS = 254
+SATURATION = 254
 
 #Refresh rate in seconds for the application
 REFRESH_RATE = 20
