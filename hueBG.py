@@ -61,10 +61,15 @@ class hueBG:
         
     def updateLights(self, BG):
         #Sets the lights to rainbow mode if you hit your target BG
-        #This can be toggled with this variable \/ in config.py
-        if BG == self.target_bg and self.rainbow_on_target == True:
-            for l in self.lights:
-                l.effect = 'colorloop'
+        #and the effect is enabled in config.py
+        if BG == self.target_bg:
+            if self.rainbow_on_target == True:
+                for l in self.lights:
+                    l.effect = 'colorloop'
+            else:
+                for l in self.lights:
+                    l.hue = self.target_hue
+        
 
         #If BG is out of the range defined in config.py,
         #we skip any calculation and just set the bulbs to 
@@ -75,7 +80,7 @@ class hueBG:
                 l.hue = self.out_hue
 
         #The lines below consist of the following steps:
-        #Check if BG is above the target and below the maximum
+        #Check if BG is above the target or below the maximum
         #Check to see which hue has a greater numeric value, then
         #calculate the hue to set the lights to
         #Clear effects to remove the rainbow if previous BG was on target
@@ -85,7 +90,7 @@ class hueBG:
             if self.target_hue > self.out_hue:
                 calc_hue = self.target_hue - ((BG-self.target_bg)*self.high_scale)
             if self.out_hue > self.target_hue:
-                calc_hue = self.out_hue + ((BG-self.target_bg)*self.high_scale)
+                calc_hue = self.target_hue + ((BG-self.target_bg)*self.high_scale)
 
             for l in self.lights:
                 l.effect = 'none'
@@ -93,10 +98,10 @@ class hueBG:
 
         if BG < self.target_bg and BG > self.min_bg:
 
-            if TARGET_HUE > self.out_hue:
+            if self.target_hue > self.out_hue:
                 calc_hue = self.target_hue - ((self.target_bg-BG)*self.low_scale)
             if self.out_hue > self.target_hue:
-                calc_hue = self.out_hue + ((self.target_bg-BG)*self.low_scale)
+                calc_hue = self.target_hue + ((self.target_bg-BG)*self.low_scale)
 
             for l in self.lights:
                 l.effect = 'none'
