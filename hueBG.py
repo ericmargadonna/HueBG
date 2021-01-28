@@ -69,7 +69,6 @@ class hueBG:
             else:
                 for l in self.lights:
                     l.hue = self.target_hue
-        
 
         #If BG is out of the range defined in config.py,
         #we skip any calculation and just set the bulbs to 
@@ -80,11 +79,9 @@ class hueBG:
                 l.hue = self.out_hue
 
         #The lines below consist of the following steps:
-        #Check if BG is above the target or below the maximum
+        #Check if BG is above the target or below the maximum and
         #Check to see which hue has a greater numeric value, then
-        #calculate the hue to set the lights to
-        #Clear effects to remove the rainbow if previous BG was on target
-        #Set the bulbs to the calculated hue
+        #calculate the hue to set the lights to and set them
         if BG > self.target_bg and BG < self.max_bg: 
 
             if self.target_hue > self.out_hue:
@@ -110,7 +107,6 @@ class hueBG:
         #Rest, you've worked hard
         t.sleep(self.refresh_rate)
 
-    #Run the app
     def run(self):
         while True:
             self.updateLights(self.getBG(self.key))
