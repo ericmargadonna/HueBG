@@ -27,17 +27,20 @@ TARGET_BG = 130
 #You can ignore this if you want
 class Hues:
     red = 0
+    orange = 6375
+    yellow = 12750
     green = 25500
     blue = 43690
     magenta = 54615
 
 # OUT_HUE = Color for out of range readings.
 # TARGET_HUE = Color for on target readings.
+#
 #                  Setting to make lights go 
 # RNBW_ON_TARGET = rainbow mode when you're 
 #                  BG is exacly on target.
-OUT_HUE = Hues.blue
-TARGET_HUE = Hues.magenta
+OUT_HUE = Hues.red
+TARGET_HUE = Hues.orange
 RNBW_ON_TARGET = True
 
 #Brightness can be from 1-254, pretty self
