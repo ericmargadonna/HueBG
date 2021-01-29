@@ -23,31 +23,34 @@ TARGET_BG = 130
 ##########################
 ### - LIGHT SETTINGS - ###
 ##########################
+
+##Color Mode Settings##
+
 #Class to group together hue values for easy use
 #You can ignore this if you want
-class Hues:
-    red = 0
+class Values:
+    red1 = 0
+    red2 = 65535
     orange = 6375
     yellow = 12750
     green = 25500
     blue = 43690
     magenta = 54615
 
+    warm = 500
+    cold = 153
 # OUT_HUE = Color for out of range readings.
 # TARGET_HUE = Color for on target readings.
 #
 #                  Setting to make lights go 
 # RNBW_ON_TARGET = rainbow mode when you're 
 #                  BG is exacly on target.
-OUT_HUE = Hues.red
-TARGET_HUE = Hues.orange
+OUT_HUE = Values.red
+TARGET_HUE = Values.orange
 RNBW_ON_TARGET = True
 
-#Brightness can be from 1-254, pretty self
-#explanitory... 
-BRIGHTNESS = 254
+##Temperature Mode Settings##
+TEMP_MODE = True
 
-#Saturation can be from 1-254, this controls
-#how 'washed out' the color is. 1 is white
-#and 254 is full color
-SATURATION = 254
+TARGET_TEMP = Values.warm
+OUT_TEMP = Values.cold

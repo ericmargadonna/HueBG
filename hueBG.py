@@ -9,9 +9,8 @@ import requests as r
 import time as t
 from config import *
 
-
 class hueBG:
-    def __init__(self,key,ip_addr,target_bg,min_bg,max_bg,target_hue,out_hue,rainbow_on_target,refresh_rate):
+    def __init__(self,key,ip_addr,temp_mode,target_bg,min_bg,max_bg,target_hue,out_hue,rainbow_on_target,refresh_rate):
         self.key = key
 
         self.min_bg = min_bg
@@ -20,6 +19,7 @@ class hueBG:
 
         self.target_hue = target_hue
         self.out_hue = out_hue
+        #self.temp_mode = temp_mode
 
         self.rainbow_on_target=rainbow_on_target
         self.refresh_rate = refresh_rate
@@ -34,18 +34,18 @@ class hueBG:
         self.low_scale = self.hue_diff/self.low_range
         self.high_scale = self.hue_diff/self.high_range
 
-        #Connects to the Philips Hue Bridge and fetches the 
-        #lights as a list and ensures that lights are on, 
+        #Connects to the Philips Hue Bridge, fetches the 
+        #lights as a list, ensures that lights are on, 
         #clears any effects, then sets the brightness and 
-        #saturation as defined in config.py
+        #saturation to max
         
         self.bridge = phue.Bridge(ip_addr)
         self.lights = self.bridge.lights
         for l in self.lights:
             l.on = True
             l.effect = 'none'
-            l.bri = BRIGHTNESS
-            l.sat = SATURATION
+            l.bri = 254
+            l.sat = 254
 
     def getBG(self, key):
             #Using the sugarmate API to fetch the most recent BG reading
@@ -55,6 +55,7 @@ class hueBG:
             #If for some reason there's an issue, just tell the user and
             #try again.
             except Exception:
+                print('Error in retrieving BG reading')
                 print(Exception)
                 print('Retrying')
                 return getBG()
@@ -68,6 +69,8 @@ class hueBG:
                     l.effect = 'colorloop'
             else:
                 for l in self.lights:
+                    l.effect = 'none'
+                    l.transitiontime = 100
                     l.hue = self.target_hue
 
         #If BG is out of the range defined in config.py,
@@ -76,6 +79,7 @@ class hueBG:
         if BG >= self.max_bg or BG <= self.min_bg:
             for l in self.lights:
                 l.effect = 'none'
+                l.transitiontime = 100
                 l.hue = self.out_hue
 
         #The lines below consist of the following steps:
@@ -91,6 +95,7 @@ class hueBG:
 
             for l in self.lights:
                 l.effect = 'none'
+                l.transitiontime = 100
                 l.hue = calc_hue           
 
         if BG < self.target_bg and BG > self.min_bg:
@@ -102,6 +107,7 @@ class hueBG:
 
             for l in self.lights:
                 l.effect = 'none'
+                l.transitiontime = 100
                 l.hue = calc_hue
         
         #Rest, you've worked hard
