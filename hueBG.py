@@ -10,7 +10,7 @@ import time as t
 from config import *
 
 class hueBG:
-    def __init__(self,key,ip_addr,temp_mode,target_bg,min_bg,max_bg,target_hue,out_hue,rainbow_on_target,refresh_rate):
+    def __init__(self,key,ip_addr,target_bg,min_bg,max_bg,target_hue,out_hue,rainbow_on_target,refresh_rate):
         self.key = key
 
         self.min_bg = min_bg
