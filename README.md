@@ -23,6 +23,7 @@ _NOTE: When running hueBG for the first time, you will have to press the button 
 For sugarmate, set up an account if you don't have one already. 
 Then, on the settings page scroll to the bottom and enable "External JSON". 
 The API key is in the link given as follows:
+
 `https://sugarmate.io/api/v1/ --- YOUR API KEY --- /latest.json`
 
 ## Daemon:
