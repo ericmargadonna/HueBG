@@ -5,6 +5,7 @@ This is a fun project I created in order to more passively keep track of my bloo
 
 ## Libraries Used:
 [Requests](https://docs.python-requests.org/en/master/)
+
 [phue](https://github.com/studioimaginaire/phue)
 
 ## Supplies:
