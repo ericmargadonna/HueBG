@@ -5,8 +5,8 @@
 #----------------------------------#
 #--BE SURE TO SET THESE VARIABLES--#
 #----------------------------------#
-SUGARMATE_API_CODE = 'zuv49t'
-HUE_BRIDGE_IP = '192.168.0.100'
+SUGARMATE_API_CODE = 'YOUR API KEY'
+HUE_BRIDGE_IP = 'YOUR BRIDGES LOCAL IP'
 
 #Refresh rate in seconds for the application
 REFRESH_RATE = 20
