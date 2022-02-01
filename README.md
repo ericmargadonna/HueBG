@@ -1,5 +1,7 @@
-# HueBG: Visualize Glucose Readings with Philips Light Bulbs
- ### A python program to control Philips Hue lightbulbs based on Continous Glucose Monitor (CGM) readings fetched from [sugarmate.io](https://sugarmate.io)
+#THIS PROJECT IS NO LONGER SUPPORTED
+#SEE [HERE](https://help.sugarmate.io/en/articles/5793778-updated-faqs-sugarmate-and-dexcom-data-connection) FOR MORE INFORMATION
+## HueBG: Visualize Glucose Readings with Philips Light Bulbs
+### A python program to control Philips Hue lightbulbs based on Continous Glucose Monitor (CGM) readings fetched from [sugarmate.io](https://sugarmate.io)
 
 This is a fun project I created in order to more passively keep track of my blood glucose readings without having to pick up my phone or checking my insulin pump. It also looks pretty cool and has an optional rainbow mode for when your reading is perfectly on your set target.
 
